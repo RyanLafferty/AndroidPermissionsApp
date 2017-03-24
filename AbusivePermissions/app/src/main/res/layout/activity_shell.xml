@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="27dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="36dp"
+        android:id="@+id/shell_input"
+        />
+
+    <Button
+        android:text="Execute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shell_input"
+        android:layout_alignLeft="@+id/shell_input"
+        android:layout_alignStart="@+id/shell_input"
+        android:layout_marginTop="19dp"
+        android:id="@+id/execute_button"
+        style="@style/Widget.AppCompat.Button.Borderless"/>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/execute_button"
+        android:layout_alignStart="@+id/execute_button"
+        android:layout_marginBottom="23dp"
+        android:id="@+id/shell_output"
+        android:maxLines = "15"
+        android:scrollbars = "vertical"
+        />
+</RelativeLayout>
