@@ -46,4 +46,26 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
+    <Button
+        android:id="@+id/create_file"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/list_root"
+        android:layout_alignBottom="@+id/list_root"
+        android:layout_toRightOf="@+id/list_root"
+        android:text="Create Secret File"/>
+
+    <Button
+        android:id="@+id/copy_file"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Copy File"
+        android:layout_below="@+id/list_root"
+        android:layout_alignLeft="@+id/writeable"
+        android:layout_alignStart="@+id/writeable"
+        android:layout_toLeftOf="@+id/create_file"
+        android:layout_toStartOf="@+id/create_file"/>
+
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package lafferty.com.abusivepermissions;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.*;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +14,13 @@ import java.io.*;
 
 public class FileActivity extends AppCompatActivity
 {
+    //Activity Widget Objects
     private TextView readable = null;
     private TextView writeable = null;
     public TextView fileOutput = null;
     private Button listRootButton = null;
+    private Button createFileButton = null;
+    private Button copyFileButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,10 +28,13 @@ public class FileActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file);
 
+        //create widget objects
         readable = (TextView) findViewById(R.id.readable);
         writeable = (TextView) findViewById(R.id.writeable);
         fileOutput = (TextView) findViewById(R.id.file_output);
         listRootButton = (Button) findViewById(R.id.list_root);
+        createFileButton = (Button) findViewById(R.id.create_file);
+        copyFileButton = (Button) findViewById(R.id.copy_file);
 
         // Example of a call to a native method
         //TextView tv = (TextView) findViewById(R.id.sample_text);
@@ -57,6 +64,8 @@ public class FileActivity extends AppCompatActivity
 
 
         listRootButton.setOnClickListener(createListDirButtonListener());
+        createFileButton.setOnClickListener(createFile());
+        copyFileButton.setOnClickListener(copyFile());
     }
 
     /* Check if we can write to external storage */
@@ -109,25 +118,15 @@ public class FileActivity extends AppCompatActivity
                 File [] files = null;
                 File sdcard = Environment.getExternalStorageDirectory();
                 File dirs = new File(sdcard.getAbsolutePath());
-                //File dirs = new File("/storage/emulated/");
                 String dirOutput = "";
                 int i = 0;
-
-                System.out.println("a");
 
                 if(dirs.exists())
                 {
                     files = dirs.listFiles();
-                    System.out.println(dirs.list());
                 }
 
-                if(files == null)
-                {
-
-                    System.out.println(dirs.getAbsolutePath());
-                    System.out.println(dirs.list());
-                }
-                else
+                if(files != null)
                 {
                     for(i = 0; i < files.length; i++)
                     {
@@ -135,6 +134,121 @@ public class FileActivity extends AppCompatActivity
                     }
 
                     fileOutput.setText(dirOutput);
+                }
+
+            }
+        });
+    }
+
+    protected View.OnClickListener copyFile()
+    {
+        return (new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                FileReader fr = null;
+                BufferedReader br =  null;
+                File [] files = null;
+                File sdcard = Environment.getExternalStorageDirectory();
+                File dirs = new File(sdcard.getAbsolutePath());
+                //File dirs = new File("/storage/emulated/");
+                String dirOutput = "";
+                int i = 0;
+
+                System.out.println("Listing contents of: " + sdcard.getAbsolutePath());
+
+                if(dirs.exists())
+                {
+                    files = dirs.listFiles();
+                }
+
+                if(files != null)
+                {
+                    for(i = 0; i < files.length; i++)
+                    {
+                        //dirOutput += files[i].getName() + "\n";
+                        if(files[i].getName().equals("secretFile.txt"))
+                        {
+                            System.out.println("Found the secret file: " + files[i].getName());
+                            String filename = "copiedFile.txt";
+                            String line = "";
+
+                            //copy the file
+                            try
+                            {
+                                //Open the files
+                                Context context = getBaseContext();
+                                PrintWriter outputStream = new PrintWriter(context.getFilesDir() + "/" + filename);
+                                
+                                System.out.println("Reading from: " + sdcard.getAbsolutePath()
+                                        + "/" + files[i].getName());
+                                System.out.println("Writing to: " + context.getFilesDir() + "/" + filename);
+
+                                FileReader inputStream = new FileReader(sdcard.getAbsolutePath() + "/" + files[i].getName());
+                                BufferedReader  r = new BufferedReader(inputStream);
+
+                                //Read one file into the copied file
+                                while(line != null)
+                                {
+                                    line = r.readLine();
+                                    if(line != null)
+                                    {
+                                        outputStream.println(line);
+                                    }
+                                }
+
+                                //close files
+                                r.close();
+                                inputStream.close();
+                                outputStream.close();
+                                r = null;
+                                inputStream = null;
+                                outputStream = null;
+
+                                fileOutput.setText("File Successfully Copied");
+                            }
+                            catch (Exception e)
+                            {
+                                System.out.println("Error: Could not copy file");
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        });
+    }
+
+    protected View.OnClickListener createFile()
+    {
+        return (new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                PrintWriter pr = null;
+                File [] files = null;
+                File sdcard = Environment.getExternalStorageDirectory();
+                File createdFile = new File(sdcard.getAbsolutePath() + "/secretFile.txt");
+
+                try
+                {
+                    if(createdFile.exists())
+                    {
+                        createdFile.delete();
+                        createdFile = null;
+                        createdFile = new File(sdcard.getAbsolutePath() + "/secretFile.txt");
+                    }
+                    pr = new PrintWriter(createdFile);
+                    pr.println("!MALICOUS CODE!");
+                    pr.close();
+                    pr = null;
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Error: Could not create file");
                 }
 
             }
