@@ -68,4 +68,28 @@
         android:layout_toLeftOf="@+id/create_file"
         android:layout_toStartOf="@+id/create_file"/>
 
+    <EditText
+        android:id="@+id/edit_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/copy_file"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignStart="@+id/copy_file"
+        android:layout_below="@+id/copy_file"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textMultiLine"/>
+
+    <Button
+        android:id="@+id/save_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/create_file"
+        android:layout_alignRight="@+id/create_file"
+        android:layout_below="@+id/create_file"
+        android:layout_toRightOf="@+id/copy_file"
+        android:text="Save"/>
+
 </RelativeLayout>

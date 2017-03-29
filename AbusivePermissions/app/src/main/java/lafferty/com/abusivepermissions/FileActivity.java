@@ -18,9 +18,11 @@ public class FileActivity extends AppCompatActivity
     private TextView readable = null;
     private TextView writeable = null;
     public TextView fileOutput = null;
+    public EditText fileInput = null;
     private Button listRootButton = null;
     private Button createFileButton = null;
     private Button copyFileButton = null;
+    private Button saveButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,14 +34,11 @@ public class FileActivity extends AppCompatActivity
         readable = (TextView) findViewById(R.id.readable);
         writeable = (TextView) findViewById(R.id.writeable);
         fileOutput = (TextView) findViewById(R.id.file_output);
+        fileInput = (EditText) findViewById(R.id.edit_file);
         listRootButton = (Button) findViewById(R.id.list_root);
         createFileButton = (Button) findViewById(R.id.create_file);
         copyFileButton = (Button) findViewById(R.id.copy_file);
-
-        // Example of a call to a native method
-        //TextView tv = (TextView) findViewById(R.id.sample_text);
-        //tv.setText(stringFromJNI());
-
+        saveButton = (Button) findViewById(R.id.save_button);
 
         boolean read = isExternalStorageReadable();
         boolean write = isExternalStorageWritable();
@@ -243,6 +242,41 @@ public class FileActivity extends AppCompatActivity
                     }
                     pr = new PrintWriter(createdFile);
                     pr.println("!MALICOUS CODE!");
+                    pr.close();
+                    pr = null;
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Error: Could not create file");
+                }
+
+            }
+        });
+    }
+
+    protected View.OnClickListener saveFile()
+    {
+        return (new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                PrintWriter pr = null;
+                File [] files = null;
+                File sdcard = Environment.getExternalStorageDirectory();
+                File createdFile = new File(sdcard.getAbsolutePath() + "/secretFile.txt");
+
+                try
+                {
+                    if(createdFile.exists())
+                    {
+                        createdFile.delete();
+                        createdFile = null;
+                        createdFile = new File(sdcard.getAbsolutePath() + "/secretFile.txt");
+                    }
+                    pr = new PrintWriter(createdFile);
+                    pr.println(fileInput.getText().toString());
+                    //pr.println("!MALICOUS CODE!");
                     pr.close();
                     pr = null;
                 }
