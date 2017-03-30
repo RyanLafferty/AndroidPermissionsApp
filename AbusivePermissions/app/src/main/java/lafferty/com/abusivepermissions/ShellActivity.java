@@ -1,6 +1,5 @@
 package lafferty.com.abusivepermissions;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.*;
 import android.text.method.ScrollingMovementMethod;
@@ -11,7 +10,31 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.Process;
 
-public class ShellActivity extends AppCompatActivity {
+public class ShellActivity extends AppCompatActivity
+{
+    private Button exeButton = null;
+    private Button monkeyButton = null;
+    private Button rmButton = null;
+    private Button lsButton = null;
+
+    /*commands that work
+    * netstat - show connections & streams
+    * cal - output calendar
+    * ps - show processes
+    * vmstat - show jvm statistics
+    * sleep - will sleep the phone
+    * service list - list running services
+    * rm
+    * rmdir
+    * cp
+    * mv
+    * monkey - create file
+    * toybox - has a bunch of packaged system utilities
+    * toybox help -a -> dump command list with usages
+    * toybox nc -> netcat, can forge headers and create http requets with a lot of fiddling
+    *              (probably better to just prompt the user for internet permission, they'll click yes anyways)
+    *
+    * */
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -21,7 +44,11 @@ public class ShellActivity extends AppCompatActivity {
 
         final TextView shellOut = (TextView) findViewById(R.id.shell_output);
         final EditText shellInput = (EditText) findViewById(R.id.shell_input);
-        Button exeButton = (Button) findViewById(R.id.execute_button);
+        exeButton = (Button) findViewById(R.id.execute_button);
+        monkeyButton = (Button) findViewById(R.id.jni_create_file);
+        rmButton = (Button) findViewById(R.id.jni_rm);
+        lsButton = (Button) findViewById(R.id.jni_ls);
+        shellOut.setMovementMethod(new ScrollingMovementMethod());
 
         exeButton.setOnClickListener(new View.OnClickListener()
         {
@@ -31,17 +58,19 @@ public class ShellActivity extends AppCompatActivity {
                 //System.out.println(shellInput.getText().toString());
                 //System.out.println(lsCall(shellInput.getText().toString()));
                 //shellOut.setText(lsCall(shellInput.getText().toString()));
-                //shellOut.setMovementMethod(new ScrollingMovementMethod());
+                //
 
                 //System.out.println(dCall());
 
                 try
                 {
-                    String cmd[] = {"ls", "-a", "/storage/emulated/0"};
-                    String cmd2[] = {"monkey", "/storage/emulated/0/Music/test.txt"};
-                    String cmd3[] = {"ls", "-a", "/system/bin"};
+                    String cmd [] = {"ls", "-a", "/storage/emulated/0"};
+                    String cmd2 [] = {"monkey", "/storage/emulated/0/Music/test.txt"};
+                    String cmd3 [] = {"ls", "-a", "/system/bin"};
+                    String userCMD [] = shellInput.getText().toString().split(" ");
                     String line = "";
-                    Process p = Runtime.getRuntime().exec(cmd3);
+                    String output = "";
+                    Process p = Runtime.getRuntime().exec(userCMD);
                     p.waitFor();
                     BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     while(line != null)
@@ -50,8 +79,10 @@ public class ShellActivity extends AppCompatActivity {
                         if(line != null)
                         {
                             System.out.println(line);
+                            output += line + "\n";
                         }
                     }
+                    shellOut.setText(output);
                 }
                 catch(Exception e)
                 {
@@ -64,6 +95,34 @@ public class ShellActivity extends AppCompatActivity {
             }
         });
 
+
+
+        monkeyButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                shellOut.setText(cCall());
+            }
+        });
+
+        lsButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                shellOut.setText(lsCall(shellInput.getText().toString()));
+            }
+        });
+
+        rmButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                shellOut.setText(dCall());
+            }
+        });
 
         //mainOut.setText(lsCall());
         //mainOut.setMovementMethod(new ScrollingMovementMethod());

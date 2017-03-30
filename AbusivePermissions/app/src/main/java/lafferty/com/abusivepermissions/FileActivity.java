@@ -65,6 +65,7 @@ public class FileActivity extends AppCompatActivity
         listRootButton.setOnClickListener(createListDirButtonListener());
         createFileButton.setOnClickListener(createFile());
         copyFileButton.setOnClickListener(copyFile());
+        saveButton.setOnClickListener(saveFile());
     }
 
     /* Check if we can write to external storage */

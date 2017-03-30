@@ -74,7 +74,7 @@ Java_lafferty_com_abusivepermissions_ShellActivity_lsCall(
         jobject obj,
         jstring jinput) {
     const char * input = env->GetStringUTFChars(jinput, (jboolean *) JNI_FALSE);
-    //printf("input = %s\n", input);
+    printf("input = %s\n", input);
     char cmd [] = "ls";
 
     std::array<char, 128> buffer;
