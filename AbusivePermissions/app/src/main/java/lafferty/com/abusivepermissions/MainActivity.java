@@ -15,6 +15,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**/
+        Intent intent = new Intent(MainActivity.this, PictureActivity.class);
+        startActivity(intent);
+        /**/
+
         TextView mainOut = (TextView) findViewById(R.id.main_output);
         Button fileButton = (Button) findViewById(R.id.file_button);
         Button shellButton = (Button) findViewById(R.id.shell_button);
