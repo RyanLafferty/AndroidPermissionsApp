@@ -24,16 +24,17 @@ public class ShellActivity extends AppCompatActivity
     * vmstat - show jvm statistics
     * sleep - will sleep the phone
     * service list - list running services
-    * rm
-    * rmdir
-    * cp
-    * mv
-    * monkey - create file
+    * rm - remove file
+    * rmdir - remove directory
+    * cp - copy file
+    * mv - move file
+    * cat - output contents of a file
+    * touch - create file
+    * monkey - create file (on some devices)
     * toybox - has a bunch of packaged system utilities
     * toybox help -a -> dump command list with usages
     * toybox nc -> netcat, can forge headers and create http requets with a lot of fiddling
     *              (probably better to just prompt the user for internet permission, they'll click yes anyways)
-    *
     * */
 
     @Override

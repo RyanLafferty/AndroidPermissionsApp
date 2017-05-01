@@ -4,9 +4,6 @@
 #include <cstdio>
 #include <iostream>
 #include <memory>
-#include <stdexcept>
-#include <stdlib.h>
-//#include <curl/curl.h>
 
 /* Information: Android seems to restrict the available system calls that can be used
  * in a JNI library
@@ -32,12 +29,23 @@ jobject obj) {
 
     std::array<char, 128> buffer;
     std::string result = "";
+
+    //open pipe
     std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
 
-    if (!pipe) throw std::runtime_error("popen() failed!");
-    while (!feof(pipe.get())) {
+    //check if pipe was opened
+    if (!pipe)
+    {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    //get result
+    while (!feof(pipe.get()))
+    {
         if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+        {
             result += buffer.data();
+        }
     }
 
     return env->NewStringUTF(result.c_str());
@@ -54,12 +62,23 @@ Java_lafferty_com_abusivepermissions_ShellActivity_dCall(
 
     std::array<char, 128> buffer;
     std::string result = "";
+
+    //open pipe
     std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
 
-    if (!pipe) throw std::runtime_error("popen() failed!");
-    while (!feof(pipe.get())) {
+    //check if pipe was opened
+    if (!pipe)
+    {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    //get result
+    while (!feof(pipe.get()))
+    {
         if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+        {
             result += buffer.data();
+        }
     }
 
     return env->NewStringUTF(result.c_str());
@@ -79,12 +98,23 @@ Java_lafferty_com_abusivepermissions_ShellActivity_lsCall(
 
     std::array<char, 128> buffer;
     std::string result = "";
+
+    //open pipe
     std::shared_ptr<FILE> pipe(popen(input, "r"), pclose);
 
-    if (!pipe) throw std::runtime_error("popen() failed!");
-    while (!feof(pipe.get())) {
+    //check if pipe was opened
+    if (!pipe)
+    {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    //get result
+    while (!feof(pipe.get()))
+    {
         if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+        {
             result += buffer.data();
+        }
     }
 
     if(input != NULL)
@@ -105,12 +135,23 @@ Java_lafferty_com_abusivepermissions_ShellActivity_curlCall(
 
     std::array<char, 128> buffer;
     std::string result = "";
+
+    //open pipe
     std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
 
-    if (!pipe) throw std::runtime_error("popen() failed!");
-    while (!feof(pipe.get())) {
+    //check if pipe was opened
+    if (!pipe)
+    {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    //get result
+    while (!feof(pipe.get()))
+    {
         if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+        {
             result += buffer.data();
+        }
     }
 
     return env->NewStringUTF(result.c_str());
@@ -125,12 +166,23 @@ Java_lafferty_com_abusivepermissions_ShellActivity_upCall(
 
     std::array<char, 128> buffer;
     std::string result = "";
+
+    //open pipe
     std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
 
-    if (!pipe) throw std::runtime_error("popen() failed!");
-    while (!feof(pipe.get())) {
+    //check if pipe was opened
+    if (!pipe)
+    {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    //get result
+    while (!feof(pipe.get()))
+    {
         if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+        {
             result += buffer.data();
+        }
     }
 
     return env->NewStringUTF(result.c_str());
@@ -146,12 +198,23 @@ Java_lafferty_com_abusivepermissions_ShellActivity_webCall(
 
     std::array<char, 128> buffer;
     std::string result = "";
+
+    //open pipe
     std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
 
-    if (!pipe) throw std::runtime_error("popen() failed!");
-    while (!feof(pipe.get())) {
+    //check if pipe was opened
+    if (!pipe)
+    {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    //get result
+    while (!feof(pipe.get()))
+    {
         if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+        {
             result += buffer.data();
+        }
     }
 
     return env->NewStringUTF(result.c_str());
@@ -166,12 +229,23 @@ Java_lafferty_com_abusivepermissions_ShellActivity_suCall(
 
     std::array<char, 128> buffer;
     std::string result = "";
+
+    //open pipe
     std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
 
-    if (!pipe) throw std::runtime_error("popen() failed!");
-    while (!feof(pipe.get())) {
+    //check if pipe was opened
+    if (!pipe)
+    {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    //get result
+    while (!feof(pipe.get()))
+    {
         if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+        {
             result += buffer.data();
+        }
     }
 
     return env->NewStringUTF(result.c_str());
@@ -182,16 +256,27 @@ jstring
 Java_lafferty_com_abusivepermissions_ShellActivity_suTestCall(
         JNIEnv* env,
         jobject obj) {
-    char cmd [] = "su echo a";
 
+    char cmd [] = "su echo a";
     std::array<char, 128> buffer;
     std::string result = "";
+
+    //open pipe
     std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
 
-    if (!pipe) throw std::runtime_error("popen() failed!");
-    while (!feof(pipe.get())) {
+    //check if pipe was opened
+    if (!pipe)
+    {
+        throw std::runtime_error("popen() failed!");
+    }
+
+    //get result
+    while (!feof(pipe.get()))
+    {
         if (fgets(buffer.data(), 128, pipe.get()) != NULL)
+        {
             result += buffer.data();
+        }
     }
 
     return env->NewStringUTF(result.c_str());
